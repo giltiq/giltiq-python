@@ -7,3 +7,6 @@ build/
 .venv/
 .eggs/
 *.egg
+
+# pi-hindsight runtime state (queue, receipts) — keep .pi/hindsight.json
+.pi/hindsight/
