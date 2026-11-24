@@ -70,6 +70,19 @@ with Giltiq(api_key="your-api-key") as client:
         print(e.code, e.status, str(e))
 ```
 
+Qualified confirmations are included from the Starter plan: 100 per account and
+calendar month on Starter, 1,000 on Business. Free keys get `PLAN_REQUIRED` (402).
+Once the allowance is used up, the API returns 402 `QUALIFIED_QUOTA_EXCEEDED` until
+the next month; the exception carries `limit`, `used` and `upgrade_url`:
+
+```python
+try:
+    client.validate("DE123456789", options=ValidateOptions(requester_vat_id="DE987654321"))
+except GiltiqApiError as e:
+    if e.code == "QUALIFIED_QUOTA_EXCEEDED":
+        print(f"Used {e.used} of {e.limit}. Upgrade: {e.upgrade_url}")
+```
+
 ## Configuration
 
 ```python
