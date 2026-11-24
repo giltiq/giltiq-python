@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "giltiq"
-version = "0.1.0"
+version = "0.1.2"
 description = "Python SDK for the Giltiq VAT Validation API"
 readme = "README.md"
 license = "MIT"
@@ -29,7 +29,7 @@ classifiers = [
 
 [project.urls]
 Homepage = "https://giltiq.de"
-Documentation = "https://giltiq.de/docs"
+Documentation = "https://giltiq.de/en/guides/quickstart/"
 Repository = "https://github.com/giltiq/giltiq-python"
 Issues = "https://github.com/giltiq/giltiq-python/issues"
 
