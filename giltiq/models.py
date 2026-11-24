@@ -86,6 +86,8 @@ class StatusResult:
 
 @dataclass
 class ValidateOptions:
+    # Your own German VAT ID (DE + 9 digits). Required for qualified confirmations
+    # (§ 18e UStG): a missing or non-German value returns 400 INVALID_REQUESTER_VAT_ID.
     requester_vat_id: Optional[str] = None
     company_name: Optional[str] = None
     company_city: Optional[str] = None
