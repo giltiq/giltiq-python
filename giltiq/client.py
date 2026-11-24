@@ -10,11 +10,24 @@ from .models import StatusResult, UsageResult, ValidateOptions, ValidationResult
 
 
 class GiltiqApiError(Exception):
-    def __init__(self, status: int, code: str, message: str, request_id: Optional[str] = None):
+    def __init__(
+        self,
+        status: int,
+        code: str,
+        message: str,
+        request_id: Optional[str] = None,
+        limit: Optional[int] = None,
+        used: Optional[int] = None,
+        upgrade_url: Optional[str] = None,
+    ):
         super().__init__(message)
         self.status = status
         self.code = code
         self.request_id = request_id
+        # Set for QUALIFIED_QUOTA_EXCEEDED (402): monthly allowance, used so far, upgrade link.
+        self.limit = limit
+        self.used = used
+        self.upgrade_url = upgrade_url
 
 
 class Giltiq:
@@ -76,6 +89,9 @@ class Giltiq:
                         error.get("code", "UNKNOWN"),
                         error.get("message", response.reason_phrase or "Unknown error"),
                         error.get("request_id"),
+                        error.get("limit"),
+                        error.get("used"),
+                        error.get("upgrade_url"),
                     )
                 return response.json()
             except httpx.TimeoutException:
@@ -155,6 +171,9 @@ class AsyncGiltiq:
                         error.get("code", "UNKNOWN"),
                         error.get("message", response.reason_phrase or "Unknown error"),
                         error.get("request_id"),
+                        error.get("limit"),
+                        error.get("used"),
+                        error.get("upgrade_url"),
                     )
                 return response.json()
             except httpx.TimeoutException:
